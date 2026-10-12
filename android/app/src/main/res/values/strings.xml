@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Urban Reign</string>
+    <string name="title_activity_main">Urban Reign</string>
+    <string name="package_name">com.urbanreign.film</string>
+    <string name="custom_url_scheme">com.urbanreign.film</string>
+</resources>
