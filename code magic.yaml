@@ -1,0 +1,60 @@
+workflows:
+  ios-release:
+    name: Urban Reign iOS release
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: CODEMAGIC_ASC_KEY
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.urbanreign.film
+      node: latest
+      xcode: latest
+    scripts:
+      - name: Install packages
+        script: npm install
+      - name: Copy the web app into iOS
+        script: npx cap sync ios
+      - name: Set up code signing
+        script: xcode-project use-profiles
+      - name: Set build number
+        script: |
+          cd ios/App
+          agvtool new-version -all $BUILD_NUMBER
+      - name: Build the app
+        script: xcode-project build-ipa --project "ios/App/App.xcodeproj" --scheme "App"
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+
+  android-beta:
+    name: Urban Reign Android beta (APK for testers)
+    max_build_duration: 45
+    instance_type: mac_mini_m2
+    environment:
+      node: latest
+      java: 21
+    scripts:
+      - name: Install packages
+        script: npm install
+      - name: Copy the web app into Android
+        script: npx cap sync android
+      - name: Build the APK
+        script: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+          cp app/build/outputs/apk/debug/app-debug.apk ../UrbanReign-beta.apk
+    artifacts:
+      - UrbanReign-beta.apk
+    publishing:
+      email:
+        recipients:
+          - thomaswright00@gmail.com
+        notify:
+          success: true
+          failure: true
