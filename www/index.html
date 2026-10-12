@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0a0f"><meta name="color-scheme" content="dark">
+<title>Macbeth: Urban Reign</title>
+<style>@font-face{font-family:"Big Shoulders Display";font-weight:700;font-display:swap;src:url(fonts/big-shoulders-display-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Big Shoulders Display";font-weight:900;font-display:swap;src:url(fonts/big-shoulders-display-latin-900-normal.woff2) format("woff2")}
+@font-face{font-family:"Cormorant Garamond";font-style:italic;font-weight:500;font-display:swap;src:url(fonts/cormorant-garamond-latin-500-italic.woff2) format("woff2")}
+@font-face{font-family:"Cormorant Garamond";font-style:italic;font-weight:600;font-display:swap;src:url(fonts/cormorant-garamond-latin-600-italic.woff2) format("woff2")}
+@font-face{font-family:Barlow;font-weight:400;font-display:swap;src:url(fonts/barlow-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Barlow;font-weight:500;font-display:swap;src:url(fonts/barlow-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Barlow;font-weight:600;font-display:swap;src:url(fonts/barlow-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Press Start 2P";font-weight:400;font-display:swap;src:url(fonts/press-start-2p-latin-400-normal.woff2) format("woff2")}
+:root{padding-top:env(safe-area-inset-top,0px)}html,body{margin:0}</style>
+</head><body>
+<style>
+/* Layout: one cinematic column, app-style. Bottom tab bar on phones, top bar on wide screens. Deliberately night-only. */
+:root{
+  --ink:#0b0a0f; --ink2:#14121b; --line:#2a2633; --bone:#efe8dc; --mute:#a39a90;
+  --blood:#c4142f; --gold:#e8a33d; --blue:#3448ff;
+  --display:"Big Shoulders Display", Impact, "Arial Narrow", sans-serif;
+  --verse:"Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --body:Barlow, "Helvetica Neue", Arial, sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--ink);color:var(--bone);font:400 17px/1.6 var(--body);margin:0}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px}
+section{padding-block:72px;scroll-margin-top:64px}
+.kicker{font:600 12px/1 var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+h2{font:900 clamp(40px,8vw,76px)/.92 var(--display);text-transform:uppercase;letter-spacing:.01em;margin:10px 0 22px;text-wrap:balance}
+.verse{font:italic 500 clamp(22px,3.4vw,30px)/1.3 var(--verse);color:var(--bone)}
+p{max-width:62ch;margin:0 0 16px}
+.mute{color:var(--mute)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* top bar (wide) */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(11,10,15,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px}
+.mark{display:flex;align-items:center;gap:10px;text-decoration:none;font:900 20px/1 var(--display);letter-spacing:.04em;text-transform:uppercase}
+.mark svg{width:26px;height:20px}
+.links{display:flex;gap:22px;font:600 13px/1 var(--body);letter-spacing:.12em;text-transform:uppercase}
+.links a{text-decoration:none;color:var(--mute)}.links a:hover{color:var(--bone)}
+.cta-sm{font:700 13px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;text-decoration:none;background:var(--blood);color:#fff;padding:10px 14px;border-radius:2px}
+@media (max-width:860px){.links{display:none}}
+
+/* bottom tabs (phones): the app shell */
+.tabs{display:none}
+@media (max-width:860px){
+  .tabs{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(11,10,15,.96);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px))}
+  .tabs a{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;font:600 10px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding:6px 0}
+  .tabs a svg{width:22px;height:22px}
+  .tabs a.on{color:var(--gold)}
+  body{padding-bottom:72px}
+  .cta-sm{display:none}
+}
+
+/* hero */
+.hero{position:relative;min-height:auto;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero .bg{position:absolute;inset:0;background:url(img/crowd.jpg) center 30%/cover no-repeat;filter:grayscale(1) contrast(1.15) brightness(.55)}
+.hero .tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(52,72,255,.42),rgba(11,10,15,.35) 45%,var(--ink) 96%),radial-gradient(60% 50% at 80% 20%,rgba(196,20,47,.45),transparent 70%)}
+.hero .wrap{position:relative;padding-block:96px 64px;display:grid;gap:22px}
+.status{display:inline-flex;align-items:center;gap:8px;width:max-content;font:600 12px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);padding:8px 12px}
+.status i{width:7px;height:7px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.title{margin:0;font:900 clamp(72px,19vw,190px)/.8 var(--display);text-transform:uppercase;letter-spacing:-.005em}
+.title span{display:block;color:var(--blood);font-size:.52em;letter-spacing:.06em;margin-top:.12em}
+.tag{font:italic 600 clamp(22px,4vw,34px)/1.2 var(--verse);max-width:22ch;margin:0}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.btn{font:700 14px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:16px 20px;border:1px solid var(--bone);display:inline-flex;align-items:center;gap:10px}
+.btn.red{background:var(--blood);border-color:var(--blood);color:#fff}
+.btn{background:transparent;color:inherit;cursor:pointer}
+.btn.red{background:var(--blood)}
+.btn[aria-disabled=true]{opacity:.55;cursor:default}
+
+/* story */
+.story{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start}
+@media (max-width:860px){.story{grid-template-columns:1fr;gap:28px}}
+.beats{display:grid;gap:0;border-top:1px solid var(--line)}
+.beat{display:grid;grid-template-columns:56px 1fr;gap:14px;padding-block:18px;border-bottom:1px solid var(--line)}
+.beat b{font:900 34px/1 var(--display);color:var(--blood)}
+.beat h3{font:900 24px/1 var(--display);text-transform:uppercase;margin:0 0 6px;letter-spacing:.02em}
+.beat p{margin:0;font-size:15px;color:var(--mute)}
+
+/* quote band */
+.band{background:var(--blood);color:#fff;padding-block:44px}
+.band .verse{color:#fff;max-width:30ch}
+.band cite{display:block;margin-top:10px;font:600 12px/1 var(--body);letter-spacing:.2em;text-transform:uppercase;font-style:normal;opacity:.85}
+
+/* players */
+.players{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+@media (max-width:860px){.players{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.players{grid-template-columns:1fr}}
+.player{background:var(--ink2);padding:22px 20px 24px;display:grid;gap:10px;align-content:start;min-width:0}
+.player .sym{width:44px;height:44px}
+.player h3{margin:0;font:900 28px/1 var(--display);text-transform:uppercase;letter-spacing:.02em}
+.player .role{font:600 12px/1.3 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.player p{margin:0;font-size:15px;color:var(--mute)}
+.player q{font:italic 500 18px/1.3 var(--verse);color:var(--bone)}
+.tba{margin-top:14px;font-size:14px}
+
+/* palette */
+.hues{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+@media (max-width:640px){.hues{grid-template-columns:1fr}}
+.hue{border-top:6px solid;padding-top:12px}
+.hue h3{margin:0 0 4px;font:900 22px/1 var(--display);text-transform:uppercase}
+.hue p{font-size:15px;color:var(--mute);margin:0}
+
+/* game */
+.game{display:grid;grid-template-columns:.95fr 1.05fr;gap:40px;align-items:center}
+@media (max-width:860px){.game{grid-template-columns:1fr}}
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.shots img{image-rendering:pixelated;width:100%;aspect-ratio:256/224;object-fit:cover;border:2px solid var(--gold)}
+.shots img:first-child{grid-column:1/-1}
+.feat{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:10px}
+.feat li{display:grid;grid-template-columns:18px 1fr;gap:10px;font-size:16px}
+.feat li::before{content:"";width:10px;height:10px;margin-top:8px;background:var(--gold);transform:rotate(45deg)}
+
+/* music */
+.music{border:1px solid var(--line);padding:28px;display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;background:linear-gradient(120deg,rgba(52,72,255,.18),transparent 60%)}
+@media (max-width:640px){.music{grid-template-columns:1fr}}
+.tape{width:150px;height:96px;border:3px solid var(--bone);border-radius:6px;position:relative;display:grid;place-items:center}
+.tape::before,.tape::after{content:"";position:absolute;top:30px;width:30px;height:30px;border:3px solid var(--bone);border-radius:50%}
+.tape::before{left:26px}.tape::after{right:26px}
+.tape span{position:absolute;top:8px;font:900 11px/1 var(--display);letter-spacing:.14em}
+
+/* tickets */
+.cities{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}
+@media (max-width:860px){.cities{grid-template-columns:1fr 1fr}}
+.city{border:1px solid var(--line);padding:18px 16px;display:grid;gap:8px;background:var(--ink2)}
+.city h3{margin:0;font:900 26px/1 var(--display);text-transform:uppercase}
+.city .when{font:600 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.city button{font:700 13px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;padding:12px;border:1px solid var(--line);background:transparent;color:var(--mute);cursor:not-allowed}
+
+footer{border-top:1px solid var(--line);padding-block:36px;color:var(--mute);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#home" aria-label="Macbeth: Urban Reign home">
+      <svg viewBox="0 0 26 20" aria-hidden="true"><path d="M1 18h24v2H1zM1 16 3 4l6 6 4-9 4 9 6-6 2 12z" fill="#e8a33d"/></svg>
+      Urban Reign
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="#story">Story</a><a href="#players">The Players</a><a href="#game">Game</a><a href="#music">Music</a><a href="#tickets">Tickets</a>
+    </nav>
+    <a class="cta-sm" href="#tickets">Tickets</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="home" style="padding:0">
+    <div class="bg" role="img" aria-label="A crowd at night washed in blue light"></div>
+    <div class="tint"></div>
+    <div class="wrap">
+      <span class="status"><i></i>Coming soon to theaters</span>
+      <h1 class="title">Macbeth<span>Urban Reign</span></h1>
+      <p class="tag">The game is the same, but the players change.</p>
+      <p class="mute" style="max-width:52ch;margin:0">Shakespeare's tragedy, rewritten on the streets of Houston. A hustler with raw talent hears a prophecy, takes the crown, and pays for every step.</p>
+      <div class="btns">
+        <a class="btn red" href="#tickets">Get tickets</a>
+        <a class="btn" href="game.html">Play the game</a>
+        <a class="btn" href="#trailer" aria-disabled="true" title="Trailer coming soon">Trailer soon</a>
+        <button class="btn" type="button" onclick="URApp.share()">Share</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="story">
+    <div class="wrap story">
+      <div>
+        <span class="kicker">The story</span>
+        <h2>The streets are watching</h2>
+        <p>In the gritty streets of Houston, a ruthless hustler with raw talent rises to power after a fateful encounter with three mysterious figures who predict his destiny. His rise comes at a bloody cost as he betrays everyone who ever trusted him.</p>
+        <p>This modern reimagining turns the Scottish king into an ambitious rapper and dealer determined to dominate by any means necessary. Ambition, betrayal and the brutal price of unchecked power, set against the Houston skyline.</p>
+        <p class="verse" style="margin-top:24px">“Every king's reign must end.”</p>
+      </div>
+      <div class="beats" id="trailer">
+        <div class="beat"><b>I</b><div><h3>The Prophecy</h3><p>Three figures step out of the shadows and name Macbeth king hereafter. The words wake an ambition he has kept quiet.</p></div></div>
+        <div class="beat"><b>II</b><div><h3>The Betrayal</h3><p>Pushed by Lady Macbeth, he kills Duncan, the respected head of the label. The deed marks him and starts the spiral.</p></div></div>
+        <div class="beat"><b>III</b><div><h3>The Fall</h3><p>Bodies pile up and enemies close in. Guilt and paranoia eat what is left, until Birnam Wood comes to Dunsinane.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="band">
+    <div class="wrap">
+      <p class="verse">“So foul and fair a day I have not seen.”</p>
+      <cite>Macbeth, Act I</cite>
+    </div>
+  </div>
+
+  <section id="players">
+    <div class="wrap">
+      <span class="kicker">Key players in the game</span>
+      <h2>One wrong move means death</h2>
+      <div class="players">
+        <article class="player">
+          <svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><path d="M6 34h32v4H6zM6 31 9 12l9 9 4-13 4 13 9-9 3 19z" fill="#e8a33d"/></svg>
+          <span class="role">The rising king</span><h3>Macbeth</h3>
+          <p>An up-and-coming rapper and producer driven to dominate the game. He builds his empire on blood.</p>
+        </article>
+        <article class="player">
+          <svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="13" fill="none" stroke="#c4142f" stroke-width="4"/><circle cx="22" cy="22" r="4" fill="#c4142f"/></svg>
+          <span class="role">Partner and manager</span><h3>Lady Macbeth</h3>
+          <p>She sees his greatness before he does, and she is colder about getting it.</p>
+          <q>Look like the innocent flower, but be the serpent under it.</q>
+        </article>
+        <article class="player">
+          <svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><path d="M8 8h28v28H8z" fill="none" stroke="#efe8dc" stroke-width="4"/><path d="M15 22h14" stroke="#efe8dc" stroke-width="4"/></svg>
+          <span class="role">Head of the label</span><h3>Duncan</h3>
+          <p>Respected for his talent and his giving. His death leaves a vacuum Macbeth rushes to fill.</p>
+        </article>
+        <article class="player">
+          <svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><path d="M10 20h24l4 6H6z" fill="#efe8dc"/><path d="M14 20c0-8 16-8 16 0" fill="#efe8dc"/></svg>
+          <span class="role">The right hand</span><h3>Banquo</h3>
+          <p>Macbeth's day-one partner. The witches promise his son a crown, and that promise gets him killed.</p>
+        </article>
+        <article class="player">
+          <svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><path d="M22 6c-6 8-12 12-12 20a12 12 0 0 0 24 0c0-8-6-12-12-20z" fill="#3a5a2a"/><path d="M22 14v24M16 24l6 4 6-4" stroke="#7a9a4a" stroke-width="2" fill="none"/></svg>
+          <span class="role">The reckoning</span><h3>Macduff</h3>
+          <p>He finds Duncan's body and never believes the story. He comes back for Macbeth wearing the woods.</p>
+        </article>
+        <article class="player">
+          <svg class="sym" viewBox="0 0 44 44" aria-hidden="true"><circle cx="11" cy="24" r="6" fill="#3448ff"/><circle cx="22" cy="16" r="6" fill="#3448ff"/><circle cx="33" cy="24" r="6" fill="#3448ff"/></svg>
+          <span class="role">The prophecy</span><h3>The Three Witches</h3>
+          <p>North Side figures in the shadows who speak in riddles and always seem to know what comes next.</p>
+          <q>All hail, Macbeth, that shalt be king hereafter!</q>
+        </article>
+      </div>
+      <p class="tba mute">Cast to be announced.</p>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <span class="kicker">The look</span>
+      <h2 style="font-size:clamp(34px,6vw,54px)">Color tells the story</h2>
+      <div class="hues">
+        <div class="hue" style="border-color:var(--blood)"><h3>Red</h3><p>The blood of betrayal, in every act of violence and passion.</p></div>
+        <div class="hue" style="border-color:var(--gold)"><h3>Orange and gold</h3><p>The fire of ambition and the false comfort before the fall.</p></div>
+        <div class="hue" style="border-color:var(--blue)"><h3>Blue</h3><p>Isolation and sorrow as the characters walk their destructive paths.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="game" style="background:var(--ink2);border-block:1px solid var(--line)">
+    <div class="wrap game">
+      <div>
+        <span class="kicker">The official game</span>
+        <h2>Play Urban Reign</h2>
+        <p>Live the film as an 8-bit side-scroller. Fight out of Club Plex, outrun HPD on I-45, and take the crown, then hold it when Birnam Wood comes to Dunsinane.</p>
+        <ul class="feat">
+          <li>Eight stages across Houston: Third Ward, Houston University, the downtown skyline</li>
+          <li>Drive a candy slab on swangas, a Lambo, or a hover bike</li>
+          <li>Find the three witches hidden in every stage</li>
+          <li>Two endings, decided by one choice at the banquet</li>
+        </ul>
+        <div class="btns"><a class="btn red" href="game.html">Play now</a></div>
+        <p class="mute" style="font-size:14px;margin-top:12px">Plays in your browser on phone or desktop. Touch controls included.</p>
+      </div>
+      <div class="shots">
+        <img src="img/g-skyline.png" alt="Game scene: Duncan's penthouse with the downtown Houston skyline at night">
+        <img src="img/g-club.png" alt="Game scene: brawl inside Club Plex">
+        <img src="img/g-hover.png" alt="Game scene: hover bike chasing Birnam trucks on I-45">
+      </div>
+    </div>
+  </section>
+
+  <section id="music">
+    <div class="wrap">
+      <span class="kicker">The soundtrack</span>
+      <h2>Music from the film</h2>
+      <div class="music">
+        <div class="tape" aria-hidden="true"><span>URBAN REIGN</span></div>
+        <div>
+          <p style="margin-bottom:8px">The film runs on its own album. The music Macbeth makes on screen is the music you will hear on release.</p>
+          <p class="mute" style="margin:0">Tracklist and streaming links drop with the trailer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tickets">
+    <div class="wrap">
+      <span class="kicker">Tickets</span>
+      <h2>Opening in your city</h2>
+      <p>Macbeth: Urban Reign opens first in four cities. Showtimes and ticket sales go live here when theaters are announced.</p>
+      <div class="cities">
+        <div class="city"><span class="when">Dates soon</span><h3>Houston</h3><button type="button" disabled>On sale soon</button></div>
+        <div class="city"><span class="when">Dates soon</span><h3>Atlanta</h3><button type="button" disabled>On sale soon</button></div>
+        <div class="city"><span class="when">Dates soon</span><h3>Los Angeles</h3><button type="button" disabled>On sale soon</button></div>
+        <div class="city"><span class="when">Dates soon</span><h3>New York</h3><button type="button" disabled>On sale soon</button></div>
+      </div>
+      <p class="mute" style="font-size:15px">Premiere screenings and brand partnerships will be announced on this page.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Macbeth: Urban Reign</span>
+    <span>A modern tragedy. Houston, Texas. <a href="privacy.html">Privacy</a> · <a href="support.html">Support</a></span>
+  </div>
+</footer>
+
+<nav class="tabs" aria-label="App sections">
+  <a href="#home" class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v2H3zM3 16 5 6l4 4 3-7 3 7 4-4 2 10z" fill="currentColor"/></svg>Home</a>
+  <a href="#story"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 10h8M8 14h8" stroke="currentColor" stroke-width="2"/></svg>Story</a>
+  <a href="#game"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 10v5M4.5 12.5h5" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="11" r="1.5" fill="currentColor"/><circle cx="18.5" cy="14" r="1.5" fill="currentColor"/></svg>Game</a>
+  <a href="#music"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="13" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="13" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>Music</a>
+  <a href="#tickets"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 7v10" stroke="currentColor" stroke-width="2" stroke-dasharray="2 2"/></svg>Tickets</a>
+</nav>
+
+<script>
+(()=>{
+  const tabs=[...document.querySelectorAll('.tabs a')];
+  const ids=tabs.map(a=>a.getAttribute('href').slice(1));
+  const secs=ids.map(id=>document.getElementById(id)).filter(Boolean);
+  const mark=()=>{let cur=ids[0];const y=window.scrollY+window.innerHeight*.35;for(const s of secs)if(s.offsetTop<=y)cur=s.id;tabs.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur));};
+  addEventListener('scroll',mark,{passive:true});mark();
+  document.querySelectorAll('[aria-disabled=true]').forEach(a=>a.addEventListener('click',e=>e.preventDefault()));
+})();
+</script>
+
+<script src="vendor/cap-core.js"></script><script src="vendor/cap-haptics.js"></script><script src="vendor/cap-share.js"></script><script src="vendor/cap-status-bar.js"></script><script src="vendor/cap-splash-screen.js"></script><script src="app.js"></script>
+</body></html>

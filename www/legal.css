@@ -1,0 +1,9 @@
+@font-face{font-family:Barlow;font-weight:400;src:url(fonts/barlow-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Big Shoulders Display";font-weight:900;src:url(fonts/big-shoulders-display-latin-900-normal.woff2) format("woff2")}
+:root{color-scheme:dark;padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:#0b0a0f;color:#efe8dc;font:400 17px/1.6 Barlow,Arial,sans-serif}
+main{max-width:680px;margin:0 auto;padding:32px 20px 64px}
+h1{font:900 44px/1 "Big Shoulders Display",Impact,sans-serif;text-transform:uppercase;margin:16px 0 8px}
+h2{font:900 24px/1.1 "Big Shoulders Display",Impact,sans-serif;text-transform:uppercase;margin:28px 0 8px;color:#e8a33d}
+a{color:#e8a33d}.back{font-size:14px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none}
+.muted{color:#a39a90;font-size:15px}
